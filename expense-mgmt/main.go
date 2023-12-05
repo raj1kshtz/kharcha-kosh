@@ -5,7 +5,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/raj1kshtz/kharcha-core/conf"
 	"github.com/raj1kshtz/kharcha-kosh/expense-mgmt/constants"
+	"github.com/raj1kshtz/kharcha-kosh/expense-mgmt/routing"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -26,5 +28,12 @@ func main() {
 	}
 
 	ctx := context.Background()
+
+	router := routing.NewRouter(ctx)
+
+	err = http.ListenAndServe(":"+port, router)
+	if err != nil {
+		log.Fatal("Failed to serve")
+	}
 
 }
